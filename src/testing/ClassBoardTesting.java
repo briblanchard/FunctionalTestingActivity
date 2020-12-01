@@ -26,7 +26,7 @@ public class ClassBoardTesting extends FunctionalTesting {
 		
 		//wait for the page to load
 		new WebDriverWait(driver, 20).until(ExpectedConditions.urlToBe("https://my.otus.com/classes/my-classes"));
-		System.out.println("Opening classes passed.\n");
+		System.out.println("Opening classes passed.");
 	}
 	
 	/**
@@ -38,9 +38,11 @@ public class ClassBoardTesting extends FunctionalTesting {
 		
 		// click load more
 		driver.findElement(By.xpath("//*[@id=\"classes-page\"]/ot-class-board-outlet/ot-class-board/div/button")).click();
+		System.out.println("Clicked load more.");
 		
 		// click on the class board post
 		driver.findElement(By.xpath("//*[@id=\"classes-page\"]/ot-class-board-outlet/ot-class-board/ot-class-board-posts/ot-post-tile/ot-post-summary/div[1]")).click();
+		System.out.println("Opening the class board post passed.");
 	}
 	
 }

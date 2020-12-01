@@ -50,8 +50,11 @@ public class GradeBookTesting extends FunctionalTesting{
 		List<WebElement> rowList = classTable.findElements(By.xpath("//div[@role='gridcell']"));
 		System.out.println(rowList.size() + " rows found.\n");
 		
-		//remove the header row
+		//remove the header row and extra three rows
 		rowList.remove(0);
+		rowList.remove(rowList.size() - 1);
+		rowList.remove(rowList.size() - 1);
+		rowList.remove(rowList.size() - 1);
 		
 		// count of rows
 		int count = 1;

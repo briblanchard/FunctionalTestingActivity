@@ -2,8 +2,6 @@ package testing;
 
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -26,7 +24,7 @@ public class AssessmentTesting extends FunctionalTesting {
 		
 		//wait for the page to load
 		new WebDriverWait(driver, 20).until(ExpectedConditions.urlToBe("https://my.otus.com/assessment/list"));
-		System.out.println("Opening assessments passed. \n");
+		System.out.println("Opening assessments passed.");
 	}
 	
 	/**
@@ -36,11 +34,13 @@ public class AssessmentTesting extends FunctionalTesting {
 		// open the assessment
 		driver.findElement(By.xpath("/html/body/div[1]/otus-app/ot-theme-provider/main/div/div/ng-component/ng-component/ot-assess-list-student/div/ot-table/table/tbody/tr")).click();
 		
-		// click start
-		WebElement popup = driver.findElement(By.xpath("/html/body/div[4]/div"));
-		popup.sendKeys(Keys.TAB);
-		popup.sendKeys(Keys.ENTER);
+		// click start		
+		driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/otus-button")).click();
+		System.out.println("Starting the assessment passed.");
 		
+		// click save and exit
+		driver.findElement(By.xpath("//*[@id=\"otus-assess-page\"]/student-simple-assess/div/div[2]/div[2]/otus-button[1]")).click();
+		System.out.println("Saving and exiting the assessment passed.");
 		
 	}
 }

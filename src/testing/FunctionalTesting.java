@@ -30,9 +30,6 @@ public class FunctionalTesting {
 	 * This function logs into otus.
 	 */
 	public void Login() {
-		// set the system properties to the path of the driver for the required driver
-		System.setProperty("webdriver.chrome.driver", "File path for the Exe");
-		
 		// navigate to the webpage
 		driver.get(this.loginURL);
 		
@@ -52,7 +49,6 @@ public class FunctionalTesting {
 		
 		//wait for the page to load
 		new WebDriverWait(driver, 20).until(ExpectedConditions.urlToBe("https://my.otus.com/home"));
-		System.out.println("Login passed. \n");
 	}
 	
 	/**
@@ -61,6 +57,7 @@ public class FunctionalTesting {
 	 * and files will not be cleared off of memory.
 	 */
 	public void Close() {
+		driver.close();
 		driver.quit();
 	}
 }

@@ -65,6 +65,9 @@ public class Application {
 				test.openResources();
 				test.openMyBookshelfTab();
 				test.addFile();
+				test.addPhoto();
+				test.addRainyPhoto();
+				test.openMyBookshelfResources();
 				
 				test.Close();
 
@@ -92,14 +95,14 @@ public class Application {
 		gradebook.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				GradeBookTesting test = new GradeBookTesting();
+				GradeBookTesting GBtest = new GradeBookTesting();
 				
-				test.Login();
+				GBtest.Login();
 				
-				test.openGradebookTab();
-				test.openGrades();
+				GBtest.openGradebookTab();
+				GBtest.openGrades();
 						
-				test.Close();
+				GBtest.Close();
 				
 			}
 		});
@@ -108,14 +111,15 @@ public class Application {
 		lessons.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				LessonsTesting test = new LessonsTesting();
+				System.out.println("made it here");
+				LessonsTesting lessonsTest = new LessonsTesting();
 				
-				test.Login();
+				lessonsTest.Login();
 				
-				test.openLessonsTab();
-				test.clickLesson();
+				lessonsTest.openLessonsTab();
+				lessonsTest.clickLesson();
 				
-				test.Close();
+				lessonsTest.Close();
 
 				
 			}

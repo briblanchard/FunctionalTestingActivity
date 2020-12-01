@@ -8,7 +8,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
@@ -35,16 +34,12 @@ public class BookshelfTesting extends FunctionalTesting {
 	 */
 	public void openResources() {
 		//wait for the page to load
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		
 		// get the table
 		WebElement resourcesTable;
-		try {
-			resourcesTable = driver.findElement(By.xpath("//*[@id=\"outerWrapper\"]/otus-app/ot-theme-provider/main/div/div/ng-component/shared-bookshelf/div[1]/div/div[2]/ot-list-resources/div/table"));
-		}catch(org.openqa.selenium.StaleElementReferenceException ex) {
-			resourcesTable = driver.findElement(By.xpath("//*[@id=\"outerWrapper\"]/otus-app/ot-theme-provider/main/div/div/ng-component/shared-bookshelf/div[1]/div/div[2]/ot-list-resources/div/table"));
-		}
-		
+		resourcesTable = driver.findElement(By.xpath("//*[@id=\"outerWrapper\"]/otus-app/ot-theme-provider/main/div/div/ng-component/shared-bookshelf/div[1]/div/div[2]/ot-list-resources/div/table"));
+				
 		// list of the rows
 		List<WebElement> rowList;
 		try {
@@ -63,14 +58,10 @@ public class BookshelfTesting extends FunctionalTesting {
 		// click the items in the row list
 		for(WebElement row : rowList) {
 			//wait for the page to load
-			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(row));
 			
 			// click the items
-			try {
-				row.click();
-			}catch(org.openqa.selenium.StaleElementReferenceException ex) {
-				row.click();
-			}
+			row.click();
 			
 			//open the resource link
 			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[16]/div/div[2]/ot-attachment-tile/div/div/div[2]/div/div/div/a")));
@@ -91,6 +82,7 @@ public class BookshelfTesting extends FunctionalTesting {
 			System.out.println("Opening resource link passed.");
 			
 			// close the pop up
+			new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[16]/div")));
 			WebElement popup = driver.findElement(By.xpath("/html/body/div[16]/div"));
 			popup.sendKeys(Keys.ESCAPE);
 			
@@ -112,40 +104,90 @@ public class BookshelfTesting extends FunctionalTesting {
 		System.out.println("Opening my bookshelf passed.\n");
 	}
 	
+	/**
+	  * This function uploads an allowed file to the bookshelf.
+	  */
 	public void addFile() {
 		// click the add resource button
 		driver.findElement(By.xpath("//button[@aria-label='open actions menu']")).click();
 		
-		// list of resource upload options
-		WebElement resourceDropdown = driver.findElement(By.xpath("//ul[@role = 'menu']"));
-		Select resource = new Select(resourceDropdown);
-		resource.selectByVisibleText("Resource");
+		// click the resource under add resources
+		driver.findElement(By.xpath("/html/body/div[19]/div[2]/div/ot-overlay/ul/li[1]")).click();
+		System.out.println("Opened resource page.");
+		
+		// click upload file resource type
+		driver.findElement(By.xpath("/html/body/div[4]/div/div/ot-drag-drop-area/div/ot-attach-wrapper/div/div/div/div[1]")).click();
+		
+		// select the file to upload
+		driver.findElement(By.className("inputfile")).sendKeys("/home/briblanchard/eclipse-workspace/Otus_FunctionalTesting/Data/integration.pdf");
+		
+		// save the file
+		driver.findElement(By.xpath("/html/body/div[4]/div/div/ot-drag-drop-area/div/ot-attach-wrapper/div/div/ot-attach-file/ot-drag-drop-area/div/div[3]/otus-button")).click();
+		
+		System.out.println("File uploaded successfully.");
 		
 	}
-	
-	public void addRainyFile() {
-		
-	}
-	
-	public void addLink() {
-		
-	}
-	
-	public void addRainyLink() {
-		
-	}
-	
+
+	/**
+	 * This function uploads the correct format of a picture
+	 */
 	public void addPhoto() {
+		// click the add resource button
+		driver.findElement(By.xpath("//button[@aria-label='open actions menu']")).click();
+		
+		// click the resource under add resources
+		driver.findElement(By.xpath("/html/body/div[19]/div[2]/div/ot-overlay/ul/li[1]")).click();
+		System.out.println("Opened resource page.");
+		
+		// click upload photo resource type
+		driver.findElement(By.xpath("/html/body/div[4]/div/div/ot-drag-drop-area/div/ot-attach-wrapper/div/div/div/div[3]")).click();
+		
+		// select the file to upload
+		driver.findElement(By.className("inputfile")).sendKeys("/home/briblanchard/eclipse-workspace/Otus_FunctionalTesting/Data/pumpkins.jpg");
+		
+		// save the file
+		driver.findElement(By.xpath("/html/body/div[4]/div/div/ot-drag-drop-area/div/ot-attach-wrapper/div/div/ot-attach-image/ot-drag-drop-area/div/div[3]/otus-button")).click();
+		
+		System.out.println("Photo uploaded successfully.");
 		
 	}
 	
+	/**
+	 * This function tries to upload the wrong file format
+	 * to make sure the error message pops up.
+	 */
 	public void addRainyPhoto() {
+		// click the add resource button
+		driver.findElement(By.xpath("//button[@aria-label='open actions menu']")).click();
+		
+		// click the resource under add resources
+		driver.findElement(By.xpath("/html/body/div[19]/div[2]/div/ot-overlay/ul/li[1]")).click();
+		System.out.println("Opened resource page.");
+		
+		// click upload photo resource type
+		driver.findElement(By.xpath("/html/body/div[4]/div/div/ot-drag-drop-area/div/ot-attach-wrapper/div/div/div/div[3]")).click();
+		
+		// select the file to upload
+		driver.findElement(By.className("inputfile")).sendKeys("/home/briblanchard/eclipse-workspace/Otus_FunctionalTesting/Data/integration.pdf");
+		
+		// find and close the error message
+		driver.findElement(By.xpath("/html/body/div[20]/div/div/div"));
+		System.out.println("Rainy day photo passed.");
+		
+		// close the pop up
+		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[4]/div")));
+		WebElement popup = driver.findElement(By.xpath("/html/body/div[4]/div"));
+		popup.sendKeys(Keys.ESCAPE);
 		
 	}
 	
+	/**
+	 * This function iterates through the uploaded resource
+	 * to ensure they open correctly
+	 */
 	public void openMyBookshelfResources() {
 		//wait for the page to load
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 		
 		// get the table
 		WebElement resourcesTable;
@@ -183,8 +225,15 @@ public class BookshelfTesting extends FunctionalTesting {
 			}
 			
 			//open the resource link
-			new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[16]/div/div[2]/ot-attachment-tile/div/div/div[2]/div/div/div/a")));
-			driver.findElement(By.xpath("/html/body/div[16]/div/div[2]/ot-attachment-tile/div/div/div[2]/div/div/div/a")).click();
+			try{ // for resource link
+				new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[16]/div/div[2]/ot-attachment-tile/div/div/div[2]/div/div/div/a")));
+				driver.findElement(By.xpath("/html/body/div[16]/div/div[2]/ot-attachment-tile/div/div/div[2]/div/div/div/a")).click();
+			}catch(org.openqa.selenium.TimeoutException e) {
+				// for image file
+				new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[16]/div/div[2]/ot-attachment-tile/div/div/div[2]/div/div/a/img")));
+				driver.findElement(By.xpath("/html/body/div[16]/div/div[2]/ot-attachment-tile/div/div/div[2]/div/div/a/img")).click();
+			}
+			
 			
 			//wait for the page to load
 			new WebDriverWait(driver, 20).until(ExpectedConditions.numberOfWindowsToBe(2));
