@@ -34,11 +34,15 @@ public class BookshelfTesting extends FunctionalTesting {
 	 */
 	public void openResources() {
 		//wait for the page to load
-		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
 		
 		// get the table
 		WebElement resourcesTable;
-		resourcesTable = driver.findElement(By.xpath("//*[@id=\"outerWrapper\"]/otus-app/ot-theme-provider/main/div/div/ng-component/shared-bookshelf/div[1]/div/div[2]/ot-list-resources/div/table"));
+		try{
+			resourcesTable = driver.findElement(By.xpath("//*[@id=\"outerWrapper\"]/otus-app/ot-theme-provider/main/div/div/ng-component/shared-bookshelf/div[1]/div/div[2]/ot-list-resources/div/table"));
+		}catch(org.openqa.selenium.StaleElementReferenceException ex) {
+			resourcesTable = driver.findElement(By.xpath("//*[@id=\"outerWrapper\"]/otus-app/ot-theme-provider/main/div/div/ng-component/shared-bookshelf/div[1]/div/div[2]/ot-list-resources/div/table"));
+		}
 				
 		// list of the rows
 		List<WebElement> rowList;
@@ -47,7 +51,7 @@ public class BookshelfTesting extends FunctionalTesting {
 		}catch(org.openqa.selenium.StaleElementReferenceException ex) {
 			rowList = resourcesTable.findElements(By.tagName("tr"));
 		}
-		System.out.println(rowList.size() + " rows found.\n");
+		System.out.println(rowList.size() + " rows found.");
 		
 		//remove the header row
 		rowList.remove(0);
@@ -204,7 +208,7 @@ public class BookshelfTesting extends FunctionalTesting {
 		}catch(org.openqa.selenium.StaleElementReferenceException ex) {
 			rowList = resourcesTable.findElements(By.tagName("tr"));
 		}
-		System.out.println(rowList.size() + " rows found.\n");
+		System.out.println(rowList.size() + " rows found.");
 		
 		//remove the header row
 		rowList.remove(0);
@@ -253,7 +257,7 @@ public class BookshelfTesting extends FunctionalTesting {
 			WebElement popup = driver.findElement(By.xpath("/html/body/div[16]/div"));
 			popup.sendKeys(Keys.ESCAPE);
 			
-			System.out.println("Row " + count + " passed.\n");
+			System.out.println("Row " + count + " passed.");
 			count = count + 1;
 		}
 		
